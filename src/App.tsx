@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
+import { CircleX, CircleCheck, RefreshCw, Copy } from "lucide-react";
 
 type DeckStatus = "none" | "ban" | "pick";
 
@@ -22,71 +23,6 @@ function getNextPickOrder(decks: Deck[]): number {
     0
   );
   return maxOrder + 1;
-}
-
-function BanIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="size-4"
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
-
-function PickIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="size-4"
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
-
-function ResetIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="size-4"
-    >
-      <path
-        fillRule="evenodd"
-        d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.451a.75.75 0 0 0 0-1.5H4.5a.75.75 0 0 0-.75.75v3.75a.75.75 0 0 0 1.5 0v-2.033l.364.363a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39l-.065.043Zm-10.624-2.85a5.5 5.5 0 0 1 9.201-2.465l.312.31H11.75a.75.75 0 0 0 0 1.5H15.5a.75.75 0 0 0 .75-.75V3.42a.75.75 0 0 0-1.5 0v2.033l-.364-.364A7 7 0 0 0 2.674 8.227a.75.75 0 0 0 1.449.39l.065-.043Z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
-
-function CopyIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="size-4"
-    >
-      <path d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
-      <path d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z" />
-    </svg>
-  );
 }
 
 function App() {
@@ -242,7 +178,7 @@ function App() {
               onClick={handleCopy}
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-indigo-700 active:bg-indigo-800"
             >
-              <CopyIcon />
+              <Copy className="size-4" />
               {copied ? "コピーしました" : "コピー"}
             </button>
           </div>
@@ -282,7 +218,7 @@ function TeamSection({
           className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-slate-300 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 active:bg-slate-200"
           onClick={onReset}
         >
-          <ResetIcon />
+          <RefreshCw className="size-4" />
           リセット
         </button>
       </div>
@@ -309,7 +245,7 @@ function TeamSection({
                 }`}
                 onClick={() => onStatusChange(i, "ban")}
               >
-                <BanIcon />
+                <CircleX className="size-4" />
                 <span className="hidden sm:inline">BAN</span>
               </button>
               <button
@@ -321,7 +257,7 @@ function TeamSection({
                 }`}
                 onClick={() => onStatusChange(i, "pick")}
               >
-                <PickIcon />
+                <CircleCheck className="size-4" />
                 <span className="hidden sm:inline">PICK</span>
               </button>
             </div>
