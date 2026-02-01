@@ -106,11 +106,46 @@ function App() {
     []
   );
 
+  const nextActionMessage = useMemo(() => {
+    const aName = teamAName || "チームA";
+    const bName = teamBName || "チームB";
+    const aBans = teamADecks.filter((d) => d.status === "ban").length;
+    const aPicks = teamADecks.filter((d) => d.status === "pick").length;
+    const bBans = teamBDecks.filter((d) => d.status === "ban").length;
+    const bPicks = teamBDecks.filter((d) => d.status === "pick").length;
+    const totalActions = aBans + aPicks + bBans + bPicks;
+
+    // Ban & Pick の手順:
+    // 1. 先手(A)が後手(B)を1つBan  → total 1
+    // 2. 後手(B)が先手(A)を1つBan  → total 2
+    // 3. 先手(A)が自チームを1つPick → total 3
+    // 4. 後手(B)が自チームを1つPick → total 4
+    // 5. 先手(A)が後手(B)を1つPick → total 5
+    // 6. 後手(B)が先手(A)を1つPick → total 6
+    // 7. 先手(A)が後手(B)を1つBan  → total 7
+    // 8. 後手(B)が先手(A)を1つBan  → total 8
+    const steps: string[] = [
+      `${aName}は${bName}のデッキを1つBANしてください。`,
+      `${bName}は${aName}のデッキを1つBANしてください。`,
+      `${aName}は自チームのデッキを1つPICKしてください。`,
+      `${bName}は自チームのデッキを1つPICKしてください。`,
+      `${aName}は${bName}のデッキを1つPICKしてください。`,
+      `${bName}は${aName}のデッキを1つPICKしてください。`,
+      `${aName}は${bName}のデッキを1つBANしてください。`,
+      `${bName}は${aName}のデッキを1つBANしてください。`,
+    ];
+
+    if (totalActions >= steps.length) {
+      return "Ban & Pickが完了しました。";
+    }
+    return steps[totalActions];
+  }, [teamAName, teamBName, teamADecks, teamBDecks]);
+
   const outputText = useMemo(() => {
     const aName = teamAName || "チームA";
     const bName = teamBName || "チームB";
-    return `${formatTeam(aName, teamADecks)}\n\n${formatTeam(bName, teamBDecks)}\n\n少々お待ちください。`;
-  }, [teamAName, teamBName, teamADecks, teamBDecks, formatTeam]);
+    return `${formatTeam(aName, teamADecks)}\n\n${formatTeam(bName, teamBDecks)}\n\n${nextActionMessage}`;
+  }, [teamAName, teamBName, teamADecks, teamBDecks, formatTeam, nextActionMessage]);
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(outputText).then(() => {
