@@ -76,7 +76,7 @@ function App() {
         {/* Header */}
         <header className="mb-6 sm:mb-8 text-center">
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800">
-            Rocket CUP JUDGE Tool
+            ROCKET CUP BAN&amp;PICK TOOL
           </h1>
           <p className="mt-1 text-sm text-slate-500">BAN &amp; PICK 管理ツール</p>
         </header>
