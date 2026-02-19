@@ -11,7 +11,7 @@ describe("App", () => {
   it("ヘッダーが表示される", () => {
     render(<App />);
     expect(
-      screen.getByText("Rocket CUP JUDGE Tool")
+      screen.getByText("ROCKET CUP BAN&PICK TOOL")
     ).toBeInTheDocument();
   });
 
